@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $data = $request->all();
-        $data['image'] = $request->file('image')->store('public/image'); 
+        $data['image'] = $request->file('image')->store('image', ['disk' => 'public']);
         $product = Product::create($data);
 
         return ResponseFormatter::success($product);
@@ -28,11 +28,19 @@ class ProductController extends Controller
     }
     public function update(CreateProductRequest $request, Product $product)
     {
-        $product->update($request->all());
+        $data = $request->all();
+        if($request->file('image'))
+        {
+            $image = $request->file('image')->store('image', ['disk' => 'public']);
+            $product->deleteImage();
+            $data['image'] = $image;
+        }
+        $product->update($data);
         return ResponseFormatter::success($product);
     }
     public function destroy(Product $product)
     {
+        $product->deleteImage();
         $product->delete();
         return ResponseFormatter::success($product);
     }

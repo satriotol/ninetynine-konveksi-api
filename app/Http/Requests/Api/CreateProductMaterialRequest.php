@@ -18,7 +18,7 @@ class CreateProductMaterialRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'product_id' => 'required',
+            'product_id' => 'required|exists:products,id',
         ];
     }
     public function failedValidation(Validator $validator)

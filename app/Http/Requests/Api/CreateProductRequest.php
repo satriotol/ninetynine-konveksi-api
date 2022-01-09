@@ -18,7 +18,7 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'image' => 'required|image',
+            'image' => 'nullable|image',
             'start_price' => 'required'
         ];
     }

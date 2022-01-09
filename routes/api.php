@@ -24,6 +24,9 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('customer', [CustomerController::class, 'index']);
+    Route::get('customer/{customer}', [CustomerController::class, 'show']);
     Route::post('customer', [CustomerController::class, 'store']);
+    Route::post('customer/{customer}', [CustomerController::class, 'update']);
+    Route::delete('customer/{customer}', [CustomerController::class, 'destroy']);
 });
 //CUSTOMER

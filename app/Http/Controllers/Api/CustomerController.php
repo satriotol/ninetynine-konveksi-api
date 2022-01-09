@@ -20,4 +20,18 @@ class CustomerController extends Controller
 
         return ResponseFormatter::success($customer);
     }
+    public function show(Customer $customer)
+    {
+        return ResponseFormatter::success($customer);
+    }
+    public function update(CreateCustomerRequest $request, Customer $customer)
+    {
+        $customer->update($request->all());
+        return ResponseFormatter::success($customer);
+    }
+    public function destroy(Customer $customer)
+    {
+        $customer->delete();
+        return ResponseFormatter::success($customer);
+    }
 }

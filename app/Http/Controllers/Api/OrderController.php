@@ -24,4 +24,24 @@ class OrderController extends Controller
 
         return ResponseFormatter::success($order);
     }
+    public function show($order)
+    {
+        $order = Order::where('id', $order)
+            ->with('order_payments', 'order_details', 'order_images', 'order_size_charts')
+            ->first();
+        return ResponseFormatter::success($order);
+    }
+    public function update(CreateOrderRequest $request, Order $order)
+    {
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $order->update($data);
+
+        return ResponseFormatter::success($order);
+    }
+    public function destroy(Order $order)
+    {
+        $order->delete();
+        return ResponseFormatter::success($order);
+    }
 }

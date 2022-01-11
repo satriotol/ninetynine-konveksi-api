@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\OrderDetailController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductMaterialController;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [AuthController::class, 'login']);
 
 
-Route::middleware('auth:sanctum')->group(function (){
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('customer', [CustomerController::class, 'index']);
     Route::get('customer/{customer}', [CustomerController::class, 'show']);
     Route::post('customer', [CustomerController::class, 'store']);
@@ -38,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('product_material/{product_material}', [ProductMaterialController::class, 'update']);
     Route::delete('product_material/{product_material}', [ProductMaterialController::class, 'destroy']);
 
-    
+
     Route::get('product', [ProductController::class, 'index']);
     Route::get('product/{product}', [ProductController::class, 'show']);
     Route::post('product', [ProductController::class, 'store']);
@@ -50,5 +51,9 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('order/{order}', [OrderController::class, 'show']);
     Route::post('order/{order}', [OrderController::class, 'update']);
     Route::delete('order/{order}', [OrderController::class, 'destroy']);
+
+    Route::post('order_detail', [OrderDetailController::class, 'store']);
+    Route::get('order_detail/{order_detail}', [OrderDetailController::class, 'show']);
+    Route::post('order_detail/{order_detail}', [OrderDetailController::class, 'update']);
+    Route::delete('order_detail/{order_detail}', [OrderDetailController::class, 'destroy']);
 });
-//CUSTOMER

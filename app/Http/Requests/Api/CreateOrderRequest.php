@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class CreateProductRequest extends FormRequest
+class CreateOrderRequest extends FormRequest
 {
     
     /**
@@ -17,9 +17,12 @@ class CreateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'start_price' => 'required',
-            'image' => 'nullable|image',
+            'title' => 'required',
+            'customer_id' => 'required|exists:customers,id',
+            'user_id' => 'nullable',
+            'note' => 'nullable',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
         ];
     }
     public function failedValidation(Validator $validator)

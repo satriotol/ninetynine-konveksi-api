@@ -29,8 +29,7 @@ class ProductController extends Controller
     public function update(CreateProductRequest $request, Product $product)
     {
         $data = $request->all();
-        if($request->file('image'))
-        {
+        if ($request->file('image')) {
             $image = $request->file('image')->store('image', ['disk' => 'public']);
             $product->deleteImage();
             $data['image'] = $image;

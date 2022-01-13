@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
     protected $fillable = ['title', 'customer_id', 'user_id', 'note', 'start_date', 'end_date'];
 
-    protected $appends = ['total_price', 'total_payment', 'total_money'];
+    protected $appends = ['total_price', 'total_payment', 'total_money', 'status'];
 
     public function order_payments()
     {
@@ -33,12 +33,22 @@ class Order extends Model
     {
         return $this->order_details()->sum('total_price') ?? 0;
     }
+
     public function getTotalPaymentAttribute()
     {
         return $this->order_payments()->sum('nominal') ?? 0;
     }
+    
     public function getTotalMoneyAttribute()
     {
         return $this->total_price - $this->total_payment;
+    }
+    public function getStatusAttribute()
+    {
+        if ($this->total_money > 0) {
+            return "Belum Lunas";
+        }else{
+            return "Lunas";
+        }
     }
 }

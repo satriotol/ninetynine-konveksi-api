@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderImageController;
 use App\Http\Controllers\Api\OrderPaymentController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductMaterialController;
+use App\Http\Controllers\OrderSizeChartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -67,4 +68,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('order_image', [OrderImageController::class, 'index']);
     Route::post('order_image', [OrderImageController::class, 'create']);
     Route::delete('order_image/{order_image}', [OrderImageController::class, 'destroy']);
+
+    Route::get('order_size_chart', [OrderSizeChartController::class, 'index']);
+    Route::post('order_size_chart', [OrderSizeChartController::class, 'create']);
+    Route::delete('order_size_chart/{order_size_chart}', [OrderSizeChartController::class, 'destroy']);
 });

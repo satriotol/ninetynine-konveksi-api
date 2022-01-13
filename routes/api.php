@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderDetailController;
+use App\Http\Controllers\Api\OrderImageController;
 use App\Http\Controllers\Api\OrderPaymentController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductMaterialController;
@@ -62,4 +63,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('order_payment/{order_payment}', [OrderPaymentController::class, 'show']);
     Route::post('order_payment/{order_payment}', [OrderPaymentController::class, 'update']);
     Route::delete('order_payment/{order_payment}', [OrderPaymentController::class, 'destroy']);
+
+    Route::get('order_image', [OrderImageController::class, 'index']);
+    Route::post('order_image', [OrderImageController::class, 'create']);
+    Route::delete('order_image/{order_image}', [OrderImageController::class, 'destroy']);
 });

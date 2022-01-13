@@ -18,7 +18,6 @@ class CreateOrderImageRequest extends FormRequest
     {
         return [
             'order_id' => 'nullable|exists:orders,id',
-            'image' => 'required|image',
             'image.*' => 'required|image',
         ];
     }

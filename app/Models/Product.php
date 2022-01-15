@@ -15,7 +15,11 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        return url('storage/'. $this->image);
+        if ($this->image) {
+            return url('storage/'. $this->image);
+        }else{
+            return url(asset('no-image.png'));
+        }
     }
     public function deleteImage()
     {

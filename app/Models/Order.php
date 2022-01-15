@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
     protected $fillable = ['title', 'customer_id', 'user_id', 'note', 'start_date', 'end_date'];
 
-    protected $appends = ['total_price', 'total_payment', 'total_money', 'status'];
+    protected $appends = ['total_price', 'total_payment', 'total_money', 'status', 'customer_name'];
 
     public function order_payments()
     {
@@ -28,6 +28,23 @@ class Order extends Model
     {
         return $this->hasMany(OrderSizeChart::class, 'order_id');
     }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function getCustomerNameAttribute()
+    {
+        return $this->customer->name ?? "";
+    }
+    public function getUserNameAttribute()
+    {
+        return $this->user->name ?? "";
+    }
 
     public function getTotalPriceAttribute()
     {
@@ -38,7 +55,7 @@ class Order extends Model
     {
         return $this->order_payments()->sum('nominal') ?? 0;
     }
-    
+
     public function getTotalMoneyAttribute()
     {
         return $this->total_price - $this->total_payment;
@@ -47,7 +64,7 @@ class Order extends Model
     {
         if ($this->total_money > 0) {
             return "Belum Lunas";
-        }else{
+        } else {
             return "Lunas";
         }
     }

@@ -10,7 +10,7 @@ class Order extends Model
     use HasFactory;
     protected $fillable = ['title', 'customer_id', 'user_id', 'note', 'start_date', 'end_date'];
 
-    protected $appends = ['total_price', 'total_payment', 'total_money', 'status', 'customer_name'];
+    protected $appends = ['total_price', 'total_payment', 'total_money', 'status', 'customer_name', 'user_name'];
 
     public function order_payments()
     {

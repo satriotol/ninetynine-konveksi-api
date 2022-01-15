@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 
 class CreateProductRequest extends FormRequest
 {
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,11 +24,6 @@ class CreateProductRequest extends FormRequest
     }
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json([
-            "success"   => false,
-            "message"   => "Validation errors",
-            "data"      => $validator->errors()
-        ]));
+        throw new HttpResponseException(response()->json($validator->errors(), 400));
     }
 }
-        

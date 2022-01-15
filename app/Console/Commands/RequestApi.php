@@ -37,16 +37,16 @@ class RequestApi extends Command
      */
     public function handle()
     {
-        $dir = app_path().'/Http/Requests/Api';
-        if(!is_dir($dir)) {
+        $dir = app_path() . '/Http/Requests/Api';
+        if (!is_dir($dir)) {
             mkdir($dir);
         }
         $name = $this->argument('name');
-        $name = explode("/",$name);
+        $name = explode("/", $name);
         $name = $name[count($name) - 1];
-        $filename = $name.'.php';
-        $path = $dir.'/'.$filename;
-        if(file_exists($path)) {
+        $filename = $name . '.php';
+        $path = $dir . '/' . $filename;
+        if (file_exists($path)) {
             $this->warn('File already exists');
             exit;
         }
@@ -58,7 +58,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-class '.$name.' extends FormRequest
+class ' . $name . ' extends FormRequest
 {
     
     /**
@@ -78,12 +78,11 @@ class '.$name.' extends FormRequest
             "success"   => false,
             "message"   => "Validation errors",
             "data"      => $validator->errors()
-        ]));
+        ],400));
     }
 }
         ';
         file_put_contents($path, $content);
         $this->info('Request generated successfully!');
     }
-
 }

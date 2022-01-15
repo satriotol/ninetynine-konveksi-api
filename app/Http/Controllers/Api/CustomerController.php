@@ -17,7 +17,6 @@ class CustomerController extends Controller
     public function store(CreateCustomerRequest $request)
     {
         $customer = Customer::create($request->all());
-
         return ResponseFormatter::success($customer);
     }
     public function show(Customer $customer)

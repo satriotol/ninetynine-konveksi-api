@@ -9,4 +9,13 @@ class OrderPayment extends Model
 {
     use HasFactory;
     protected $fillable = ['order_id', 'nominal'];
+    public function getCreatedAtAttribute($value)
+    {
+        return date("d-m-Y", strtotime($value));
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date("d-m-Y", strtotime($value));
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,5 +44,11 @@ class OrderController extends Controller
     {
         $order->delete();
         return ResponseFormatter::success($order);
+    }
+    public function printpdf($id)
+    {
+        $order = Order::find($id);
+        $pdf = PDF::loadView('pdf_test',compact('order'));
+        return $pdf->download("INV-".$order->id.".pdf");
     }
 }

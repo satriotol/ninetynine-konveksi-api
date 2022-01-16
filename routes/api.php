@@ -50,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('product/{product}', [ProductController::class, 'destroy']);
 
     Route::get('order', [OrderController::class, 'index']);
-    // Route::get('order/pdf/print/{id}', [OrderController::class, 'printpdf']);
+    Route::get('order/pdf/print/{id}', [OrderController::class, 'printpdf']);
     Route::post('order', [OrderController::class, 'store']);
     Route::get('order/{order}', [OrderController::class, 'show']);
     Route::post('order/{order}', [OrderController::class, 'update']);

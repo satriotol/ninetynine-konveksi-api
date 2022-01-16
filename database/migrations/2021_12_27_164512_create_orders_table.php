@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('title');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('user_id');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 
 class CreateOrderImageRequest extends FormRequest
 {
-    
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,8 +23,10 @@ class CreateOrderImageRequest extends FormRequest
     }
     public function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json($validator->errors(), 400));
-
+        throw new HttpResponseException(response()->json([
+            "success"   => false,
+            "message"   => "Validation errors",
+            "data"      => $validator->errors()
+        ]));
     }
 }
-        

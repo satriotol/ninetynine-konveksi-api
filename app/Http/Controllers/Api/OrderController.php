@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
+use App\Mail\SendEmail;
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -50,5 +52,10 @@ class OrderController extends Controller
         $order = Order::find($id);
         $pdf = PDF::loadView('pdf_test',compact('order'));
         return $pdf->download("INV-".$order->id.".pdf");
+    }
+    public function sendemail(Order $order)
+    {
+        Mail::to($order->customer->email)->send(new SendEmail($order));
+
     }
 }

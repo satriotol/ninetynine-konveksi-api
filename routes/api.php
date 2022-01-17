@@ -53,6 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('order/pdf/print/{id}', [OrderController::class, 'printpdf']);
     Route::post('order', [OrderController::class, 'store']);
     Route::get('order/{order}', [OrderController::class, 'show']);
+    Route::get('order/send_email/{order}', [OrderController::class, 'sendemail']);
     Route::post('order/{order}', [OrderController::class, 'update']);
     Route::delete('order/{order}', [OrderController::class, 'destroy']);
 

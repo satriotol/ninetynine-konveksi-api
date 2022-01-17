@@ -17,13 +17,11 @@ class OrderImageController extends Controller
     public function create(CreateOrderImageRequest $request)
     {
         $data = $request->all();
-        foreach ($request->file('image') as $image) {
-            $data['image'] = $image->store('image', ['disk' => 'public']);
-            $order_image = OrderImage::create([
-                'order_id' => $request->order_id,
-                'image' => $data['image']
-            ]);
-        }
+        $data['image'] = $request->file('image')->store('image', ['disk' => 'public']);
+        $order_image = OrderImage::create([
+            'order_id' => $request->order_id,
+            'image' => $data['image']
+        ]);
         return ResponseFormatter::success($order_image);
     }
     public function destroy(OrderImage $order_image)

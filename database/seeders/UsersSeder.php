@@ -16,7 +16,7 @@ class UsersSeder extends Seeder
     public function run()
     {
         $roles = ['admin', 'user'];
-        foreach ($roles as $role => $value) {
+        foreach ($roles as $role) {
             Role::create([
                 'name' => $role,
             ]);

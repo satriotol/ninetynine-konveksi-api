@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderImageController;
 use App\Http\Controllers\Api\OrderPaymentController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ProductMaterialController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\OrderSizeChartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,12 @@ Route::post('login', [AuthController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', [UserController::class, 'index']);
+    Route::get('user/{user}', [UserController::class, 'show']);
+    Route::post('user', [UserController::class, 'store']);
+    Route::post('user/{user}', [UserController::class, 'update']);
+    Route::delete('user/{user}', [UserController::class, 'destroy']);
+
     Route::get('customer', [CustomerController::class, 'index']);
     Route::get('customer/{customer}', [CustomerController::class, 'show']);
     Route::post('customer', [CustomerController::class, 'store']);

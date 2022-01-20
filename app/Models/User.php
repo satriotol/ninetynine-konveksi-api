@@ -44,6 +44,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = ['role_name'];
+
+    public function getRoleNameAttribute()
+    {
+        return $this->role->name;
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');

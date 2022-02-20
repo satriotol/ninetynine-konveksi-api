@@ -14,6 +14,11 @@ class CustomerController extends Controller
         $customers = Customer::paginate(5);
         return ResponseFormatter::success($customers);
     }
+    public function indexGetId()
+    {
+        $customers = Customer::all(['id', 'name']);
+        return ResponseFormatter::success($customers);
+    }
     public function store(CreateCustomerRequest $request)
     {
         $customer = Customer::create($request->all());

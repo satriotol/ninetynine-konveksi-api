@@ -17,7 +17,9 @@ class ProductController extends Controller
     public function store(CreateProductRequest $request)
     {
         $data = $request->all();
-        $data['image'] = $request->file('image')->store('image', ['disk' => 'public']);
+        if ($request->file('image')) {
+            $data['image'] = $request->file('image')->store('image', ['disk' => 'public']);
+        }
         $product = Product::create($data);
 
         return ResponseFormatter::success($product);

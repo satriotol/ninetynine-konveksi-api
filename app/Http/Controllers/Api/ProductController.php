@@ -30,7 +30,7 @@ class ProductController extends Controller
     }
     public function update(CreateProductRequest $request, Product $product)
     {
-        $data = $request->all();
+        $data = $request->only(['name', 'start_price']);
         if ($request->file('image')) {
             $image = $request->file('image')->store('image', ['disk' => 'public']);
             $product->deleteImage();

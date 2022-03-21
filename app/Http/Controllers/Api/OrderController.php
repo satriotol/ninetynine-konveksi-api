@@ -15,7 +15,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::orderBy('id', 'desc')->get();
         return ResponseFormatter::success($orders);
     }
 
@@ -50,12 +50,11 @@ class OrderController extends Controller
     public function printpdf($id)
     {
         $order = Order::find($id);
-        $pdf = PDF::loadView('pdf_test',compact('order'));
-        return $pdf->download("INV-".$order->id.".pdf");
+        $pdf = PDF::loadView('pdf_test', compact('order'));
+        return $pdf->download("INV-" . $order->id . ".pdf");
     }
     public function sendemail(Order $order)
     {
         Mail::to($order->customer->email)->send(new SendEmail($order));
-
     }
 }

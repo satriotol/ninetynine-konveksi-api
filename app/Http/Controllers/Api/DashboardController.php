@@ -23,6 +23,7 @@ class DashboardController extends Controller
             'total_customer' => $customers->count(),
             'total_product' => $products->count(),
             'total_order' => $orders->count(),
+            'total_money' => $orders->sum('total_money'),
         ]);
     }
 }

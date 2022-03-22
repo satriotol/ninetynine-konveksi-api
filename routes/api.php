@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderDetailController;
 use App\Http\Controllers\Api\OrderImageController;
@@ -37,6 +38,8 @@ Route::middleware('auth:sanctum')->group(function () {
         $roles = Role::all();
         return ResponseFormatter::success($roles);
     });
+
+    Route::get('dashboard', [DashboardController::class, 'index']);
 
     Route::get('user', [UserController::class, 'index']);
     Route::get('user/{user}', [UserController::class, 'show']);

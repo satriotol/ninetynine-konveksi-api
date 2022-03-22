@@ -24,8 +24,11 @@ class CustomerController extends Controller
         $customer = Customer::create($request->all());
         return ResponseFormatter::success($customer);
     }
-    public function show(Customer $customer)
+    public function show($customer)
     {
+        $customer = Customer::where('id', $customer)
+            ->with('orders')
+            ->first();
         return ResponseFormatter::success($customer);
     }
     public function update(CreateCustomerRequest $request, Customer $customer)

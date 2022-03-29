@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class OrderPaymentController extends Controller
 {
+    public function index()
+    {
+        $order_payments = OrderPayment::paginate(5);
+        return ResponseFormatter::success($order_payments);
+    }
     public function store(CreateOrderPaymentRequest $request)
     {
         $data = $request->all();

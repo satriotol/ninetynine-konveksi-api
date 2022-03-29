@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('order_detail/{order_detail}', [OrderDetailController::class, 'update']);
     Route::delete('order_detail/{order_detail}', [OrderDetailController::class, 'destroy']);
 
+    Route::get('order_payment', [OrderPaymentController::class, 'index']);
     Route::post('order_payment', [OrderPaymentController::class, 'store']);
     Route::get('order_payment/{order_payment}', [OrderPaymentController::class, 'show']);
     Route::post('order_payment/{order_payment}', [OrderPaymentController::class, 'update']);

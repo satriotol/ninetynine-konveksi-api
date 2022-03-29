@@ -14,6 +14,11 @@ class ProductController extends Controller
         $products = Product::paginate(5);
         return ResponseFormatter::success($products);
     }
+    public function indexnotpaginate()
+    {
+        $products = Product::all();
+        return ResponseFormatter::success($products);
+    }
     public function store(CreateProductRequest $request)
     {
         $data = $request->all();

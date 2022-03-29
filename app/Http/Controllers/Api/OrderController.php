@@ -45,6 +45,8 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $order->delete();
+        $order->order_details()->delete();
+        $order->order_payments()->delete();
         return ResponseFormatter::success($order);
     }
     public function printpdf($id)

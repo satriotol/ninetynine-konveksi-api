@@ -11,18 +11,27 @@ class Product extends Model
     use HasFactory;
     protected $fillable = ['name', 'image', 'start_price'];
 
-    protected $appends = ['image_url'];
+    protected $appends = ['image_url', 'total_order'];
 
     public function getImageUrlAttribute()
     {
         if ($this->image) {
-            return url('storage/'. $this->image);
-        }else{
+            return url('storage/' . $this->image);
+        } else {
             return url(asset('no-image.png'));
         }
     }
     public function deleteImage()
     {
         Storage::disk('public')->delete($this->attributes['image']);
+    }
+    public function order_details()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id');
+    }
+
+    public function getTotalOrderAttribute()
+    {
+        return $this->order_details()->sum('qty') ?? "";
     }
 }

@@ -11,7 +11,7 @@ class OrderPaymentController extends Controller
 {
     public function index()
     {
-        $order_payments = OrderPayment::paginate(5);
+        $order_payments = OrderPayment::orderBy('id', 'desc')->paginate(5);
         return ResponseFormatter::success($order_payments);
     }
     public function store(CreateOrderPaymentRequest $request)

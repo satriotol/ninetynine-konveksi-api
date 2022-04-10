@@ -13,9 +13,16 @@ use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('id', 'desc')->get();
+        $orders = Order::when($request->customer_name, function ($q) use ($request) {
+            $q->whereHas('customer', function ($sq) use ($request) {
+                $sq->where('name', 'like', "%" . $request->customer_name . "%");
+            });
+        })->when($request->user_id, function ($q) use ($request){
+            $q->where('user_id', $request->user_id);
+        })->orderBy('id', 'desc')->paginate(5);
+        // $orders = Order::orderBy('id', 'desc')->get();
         return ResponseFormatter::success($orders);
     }
 

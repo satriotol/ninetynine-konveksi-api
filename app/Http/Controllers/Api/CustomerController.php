@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -21,7 +22,9 @@ class CustomerController extends Controller
     }
     public function store(CreateCustomerRequest $request)
     {
-        $customer = Customer::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        $customer = Customer::create($data);
         return ResponseFormatter::success($customer);
     }
     public function show($customer)

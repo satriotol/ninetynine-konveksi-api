@@ -21,6 +21,7 @@ class CreateCustomerRequest extends FormRequest
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
+            'user_id' => 'nullable',
             'company' => 'required',
         ];
     }

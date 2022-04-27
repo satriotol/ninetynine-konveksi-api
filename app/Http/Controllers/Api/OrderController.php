@@ -19,11 +19,20 @@ class OrderController extends Controller
             $q->whereHas('customer', function ($sq) use ($request) {
                 $sq->where('name', 'like', "%" . $request->customer_name . "%");
             });
-        })->when($request->user_id, function ($q) use ($request){
-            $q->where('user_id', $request->user_id);
-        })->orderBy('id', 'desc')->paginate(5);
-        // $orders = Order::orderBy('id', 'desc')->get();
-        return ResponseFormatter::success($orders);
+        })->when($request->user_name, function ($q) use ($request) {
+            $q->whereHas('user', function ($sq) use ($request) {
+                $sq->where('name', 'like', "%" . $request->user_name . "%");
+            });
+        })->orderBy('id', 'desc');
+        return ResponseFormatter::success(
+            [
+                'orders' => $orders->paginate(5),
+                'total_order' => $orders->count(),
+                'total_money' => $orders->with(['order_payments' => function ($q){
+                    $q->sum('nominal');
+                }])->get()
+            ]
+        );
     }
 
     public function store(CreateOrderRequest $request)

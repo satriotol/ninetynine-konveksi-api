@@ -12,7 +12,8 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::paginate(5);
+        $cust = new Customer();
+        $customers = $cust->getCustomerPaginate();
         return ResponseFormatter::success($customers);
     }
     public function indexGetId()

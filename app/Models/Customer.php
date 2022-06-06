@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Customer extends Model
 {
@@ -22,5 +23,13 @@ class Customer extends Model
     public function getUserNameAttribute()
     {
         return $this->user->name ?? "";
+    }
+    public function getCustomerPaginate()
+    {
+        if (Auth::user()->role->name == 'user') {
+            return $this->where('user_id', Auth::user()->id)->paginate(10);
+        } else {
+            return $this->paginate(10);
+        }
     }
 }

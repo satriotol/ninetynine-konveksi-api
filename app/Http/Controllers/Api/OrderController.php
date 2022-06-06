@@ -34,9 +34,6 @@ class OrderController extends Controller
             [
                 'orders' => $orders->paginate(5),
                 'total_order' => $orders->count(),
-                'total_money' => $orders->with(['order_payments' => function ($q) {
-                    $q->sum('nominal');
-                }])->get()
             ]
         );
     }

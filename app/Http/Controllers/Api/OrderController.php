@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderRequest;
 use App\Mail\SendEmail;
 use App\Models\Order;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,7 @@ class OrderController extends Controller
 {
     public function index(Request $request)
     {
-        $orders = Order::when($request->customer_name, function ($q) use ($request) {
+        $order_query = Order::when($request->customer_name, function ($q) use ($request) {
             $q->whereHas('customer', function ($sq) use ($request) {
                 $sq->where('name', 'like', "%" . $request->customer_name . "%");
             });
@@ -23,12 +24,17 @@ class OrderController extends Controller
             $q->whereHas('user', function ($sq) use ($request) {
                 $sq->where('name', 'like', "%" . $request->user_name . "%");
             });
-        })->orderBy('id', 'desc');
+        });
+        if (Auth::user()->role->name == 'user') {
+            $orders = $order_query->where('user_id', Auth::user()->id)->orderBy('id', 'desc');
+        } else {
+            $orders = $order_query->orderBy('id', 'desc');
+        }
         return ResponseFormatter::success(
             [
                 'orders' => $orders->paginate(5),
                 'total_order' => $orders->count(),
-                'total_money' => $orders->with(['order_payments' => function ($q){
+                'total_money' => $orders->with(['order_payments' => function ($q) {
                     $q->sum('nominal');
                 }])->get()
             ]

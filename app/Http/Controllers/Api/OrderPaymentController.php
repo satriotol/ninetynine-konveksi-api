@@ -4,15 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateOrderPaymentRequest;
+use App\Models\Order;
 use App\Models\OrderPayment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderPaymentController extends Controller
 {
     public function index()
     {
-        $order_payments = OrderPayment::orderBy('id', 'desc')->paginate(5);
-        return ResponseFormatter::success($order_payments);
+        $order_payment_query = OrderPayment::orderBy('id', 'desc')->orderBy('id', 'desc');
+        if (Auth::user()->role->name == 'user') {
+            $order_payments = $order_payment_query->whereHas('order', function ($q) {
+                $q->where('user_id', Auth::user()->id);
+            });
+        } else {
+            $order_payments = $order_payment_query;
+        }
+        return ResponseFormatter::success($order_payments->paginate(5));
     }
     public function store(CreateOrderPaymentRequest $request)
     {

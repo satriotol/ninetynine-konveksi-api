@@ -32,4 +32,12 @@ class Customer extends Model
             return $this->paginate(10);
         }
     }
+    public function getCustomer()
+    {
+        if (Auth::user()->role->name == 'user') {
+            return $this->where('user_id', Auth::user()->id)->get(['id', 'name']);
+        } else {
+            return $this->all(['id', 'name']);
+        }
+    }
 }

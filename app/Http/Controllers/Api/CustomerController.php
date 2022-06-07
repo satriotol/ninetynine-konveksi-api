@@ -18,8 +18,8 @@ class CustomerController extends Controller
     }
     public function indexGetId()
     {
-        $customers = Customer::all(['id', 'name']);
-        return ResponseFormatter::success($customers);
+        $cust = new Customer();
+        return ResponseFormatter::success($cust->getCustomer());
     }
     public function store(CreateCustomerRequest $request)
     {

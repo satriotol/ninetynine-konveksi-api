@@ -18,8 +18,6 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'start_price' => 'required',
-            'image' => 'nullable|image',
         ];
     }
     public function failedValidation(Validator $validator)

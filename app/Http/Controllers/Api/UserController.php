@@ -12,8 +12,8 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return ResponseFormatter::success($users);
+        $users = new User();
+        return ResponseFormatter::success($users->getUser());
     }
     public function show(User $user)
     {
